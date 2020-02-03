@@ -34,9 +34,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(37.519203, 126.979456)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Korea"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        samplePoi.forEach {
+            val latlng = LatLng(it.lat, it.lng)
+            mMap.addMarker(MarkerOptions().position(latlng).title(it.title))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 9f))
+        }
     }
+
+    private val samplePoi = arrayListOf(
+        Poi(37.37478492230988, 126.72695961530327, "Baegot"),
+        Poi(37.41179071428517, 126.90895676504908, "SeokSu"),
+        Poi(37.51224691265058, 127.11876347974098, "Bang-i"))
+
+    data class Poi(val lat: Double, val lng: Double, val title: String)
 }
